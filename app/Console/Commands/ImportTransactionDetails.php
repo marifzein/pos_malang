@@ -12,73 +12,90 @@ class ImportTransactionDetails extends Command
 
     public function handle()
     {
-        $this->info('STARTING OPTIMIZED IMPORT...');
+        $this->info('STARTING OPTIMIZED IMPORT TRANSACTION DETAILS...');
 
-        // 1. Matikan sementara Foreign Key Checks & Auto Commit bawaan session untuk speedup & kestabilan
+        DB::disableQueryLog();
+        DB::connection('mekarsari')->disableQueryLog();
+
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::statement('SET UNIQUE_CHECKS=0;');
 
+        // Cache seluruh master produk (kode_barang & nama_barang) sekali di awal agar tidak query berulang per batch
+        $products = DB::table('products')
+            ->select('id', 'kode_barang', 'nama_barang')
+            ->get()
+            ->keyBy('id');
+
         $insertCount = 0;
 
-        // 2. Gunakan Chunking besar (misal 5.000)
         DB::connection('mekarsari')
             ->table('pj_penjualan_detail')
             ->orderBy('id_penjualan_d')
-            ->chunk(5000, function ($rows) use (&$insertCount) {
-                
-                $batchData = [];
+            ->chunkById(5000, function ($rows) use (&$insertCount, $products) {
 
-                // Load map produk ke memory sekaligus untuk menghindari query N+1 di loop
-                $productIds = $rows->pluck('id_barang')->unique()->toArray();
-                $products = DB::table('products')
-                    ->whereIn('id', $productIds)
-                    ->get()
-                    ->keyBy('id');
+                // Ambil tanggal transaksi asli dari tabel transactions untuk batch ini
+                $trxIds = $rows->pluck('id_penjualan_m')->unique()->toArray();
+                $trxDates = DB::table('transactions')
+                    ->whereIn('id', $trxIds)
+                    ->pluck('created_at', 'id');
+
+                $batchData = [];
 
                 foreach ($rows as $row) {
                     $product = $products->get($row->id_barang);
-
-                    // Skip jika produk tidak ditemukan
                     if (!$product) {
-                        continue; 
+                        continue;
                     }
+
+                    $trxDate = $trxDates[$row->id_penjualan_m] ?? now();
 
                     $batchData[] = [
                         'id'             => $row->id_penjualan_d,
                         'transaction_id' => $row->id_penjualan_m,
                         'product_id'     => $row->id_barang,
-                        'harga_beli'     => $row->hargabeli,
+                        'harga_beli'     => $row->hargabeli ?? 0,
                         'kode_barang'    => $product->kode_barang,
                         'nama_barang'    => $product->nama_barang,
-                        'harga'          => $row->harga_satuan,
-                        'qty'            => $row->jumlah_beli,
-                        'subtotal'       => $row->total,
-                        'created_at'     => now(),
-                        'updated_at'     => now(),
+                        'harga'          => $row->harga_satuan ?? 0,
+                        'qty'            => $row->jumlah_beli ?? 0,
+                        'subtotal'       => $row->total ?? 0,
+                        'created_at'     => $trxDate,
+                        'updated_at'     => $trxDate,
                     ];
                 }
 
-                // 3. Lakukan BULK INSERT / UPSERT dalam 1 Transaction Block
                 if (!empty($batchData)) {
                     DB::transaction(function () use ($batchData) {
-                        // Gunakan upsert: Insert jika belum ada, Update jika ID sudah ada
-                        DB::table('transaction_details')->upsert(
-                            $batchData,
-                            ['id'], // Unique key constraint
-                            ['transaction_id', 'product_id', 'harga_beli', 'kode_barang', 'nama_barang', 'harga', 'qty', 'subtotal', 'updated_at']
-                        );
+                        // Pecah per 2.000 baris (2.000 x 11 kolom = 22.000 placeholder, aman di bawah batas 65.535)
+                        foreach (array_chunk($batchData, 2000) as $chunk) {
+                            DB::table('transaction_details')->upsert(
+                                $chunk,
+                                ['id'],
+                                [
+                                    'transaction_id',
+                                    'product_id',
+                                    'harga_beli',
+                                    'kode_barang',
+                                    'nama_barang',
+                                    'harga',
+                                    'qty',
+                                    'subtotal',
+                                    'created_at',
+                                    'updated_at',
+                                ]
+                            );
+                        }
                     });
 
                     $insertCount += count($batchData);
-                    $this->info("Processed batch... Total: {$insertCount} records.");
+                    $this->info("Processed detail batch... Total: {$insertCount} records.");
                 }
-            });
+            }, 'id_penjualan_d');
 
-        // Nyalakan kembali check
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         DB::statement('SET UNIQUE_CHECKS=1;');
 
-        $this->info("SELESAI! Total {$insertCount} records berhasil di-import/update tanpa stress I/O.");
+        $this->info("SELESAI! Total {$insertCount} records detail berhasil di-import.");
 
         return Command::SUCCESS;
     }

@@ -12,30 +12,44 @@ class ImportSuppliers extends Command
 
     public function handle()
     {
+        $this->info('IMPORT DATA SUPPLIER');
+
         $rows = DB::connection('mekarsari')
             ->table('pj_merk_barang')
             ->orderBy('id_merk_barang')
             ->get();
 
-        $count = 0;
+        $insert = 0;
+        $update = 0;
 
         foreach ($rows as $row) {
-            DB::table('suppliers')->insert([
-                'id'         => $row->id_merk_barang,
-                'kode'       => 'SUP-' . str_pad($row->id_merk_barang, 4, '0', STR_PAD_LEFT), // Hasil: SUP-0001, dst
-                'nama'       => trim($row->merk),
-                'pic'        => null,
-                'telepon'    => null,
-                'email'      => null,
-                'alamat'     => null,
-                'is_active'  => $row->dihapus === 'tidak',
-                'created_at' => now(),
+            $data = [
+                'kode'       => 'SUP-' . str_pad($row->id_merk_barang, 4, '0', STR_PAD_LEFT),
+                'nama'       => trim($row->merk) ?: 'Supplier #' . $row->id_merk_barang,
+                'is_active'  => $row->dihapus === 'tidak' ? 1 : 0,
                 'updated_at' => now(),
-            ]);
+            ];
 
-            $count++;
+            $exists = DB::table('suppliers')->where('id', $row->id_merk_barang)->first();
+
+            if ($exists) {
+                DB::table('suppliers')->where('id', $row->id_merk_barang)->update($data);
+                $update++;
+            } else {
+                DB::table('suppliers')->insert([
+                    'id'         => $row->id_merk_barang,
+                    'pic'        => null,
+                    'telepon'    => null,
+                    'email'      => null,
+                    'alamat'     => null,
+                    ...$data,
+                    'created_at' => now(),
+                ]);
+                $insert++;
+            }
         }
 
-        $this->info("Berhasil mengimpor {$count} data supplier.");
+        $this->table(['Insert', 'Update'], [[$insert, $update]]);
+        $this->info('Selesai.');
     }
 }
