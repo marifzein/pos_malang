@@ -19,11 +19,11 @@
         <!-- Card Container Utama (Max-width xl / 2-Kolom Grid) -->
         <div class="w-full max-w-4xl bg-white rounded-3xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2 min-h-[500px]">
             
-           <!-- Kolom Kiri: Gambar Utuh Tanpa Kepotong -->
-            <div class="hidden md:flex items-center justify-center  bg-white">
-                <img src="{{ asset('images/toys-login.webp') }}" 
+           <!-- Kolom Kiri: Full Biru, Gambar Lebih Proporsional -->
+            <div class="hidden md:flex items-center justify-center p-8 bg-[#5fafff]" style="background-color: #5fafff;">
+                <img src="{{ asset('images/spmarket.webp') }}" 
                     alt="Kasir Minimarket Illustration" 
-                    class="w-full h-full max-w-[460px] object-contain">
+                    class="max-w-[300px] h-auto object-contain rounded-2xl">
             </div>
 
             <!-- Kolom Kanan: Form Auth -->
@@ -35,7 +35,7 @@
                         <div >
                             
                             <img 
-                                src="{{ asset('images/tatakas-color.png') }}" 
+                                src="{{ asset('images/ttkas_512.png') }}" 
                                 alt="TataKas Logo" 
                                 class="w-7 h-7 object-contain flex-shrink-0 "
                             >

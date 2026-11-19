@@ -12,9 +12,9 @@
                 <i class="ri-shopping-cart-2-line text-xl"></i>
             </div> --}}
             <!-- Logo Image -->
-            <div class="w-11 h-11 rounded-full border border-x-2 border-white text-indigo-400 flex items-center justify-center flex-shrink-0 bg-white">
+            <div class="w-11 h-11 rounded-full border border-x-2 border-white text-indigo-400 flex items-center justify-center flex-shrink-0 bg-blue-500">
                 <img 
-                    src="{{ asset('images/tatakas-color.png') }}" 
+                    src="{{ asset('images/tatakas-logo.png') }}" 
                     alt="TataKas Logo" 
                     class="w-7 h-7 object-contain flex-shrink-0 "
                 >
