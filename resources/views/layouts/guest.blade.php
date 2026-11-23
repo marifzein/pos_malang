@@ -20,10 +20,10 @@
         <div class="w-full max-w-4xl bg-white rounded-3xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2 min-h-[500px]">
             
            <!-- Kolom Kiri: Full Biru, Gambar Lebih Proporsional -->
-            <div class="hidden md:flex items-center justify-center p-8 bg-[#5fafff]" style="background-color: #5fafff;">
+            <div class="hidden md:block relative overflow-hidden bg-[#5fafff]" style="background-color: #5fafff;">
                 <img src="{{ asset('images/spmarket.webp') }}" 
-                    alt="Kasir Minimarket Illustration" 
-                    class="max-w-[300px] h-auto object-contain rounded-2xl">
+                    alt="Ilustrasi Minimarket" 
+                    class="w-full h-full object-cover object-center">
             </div>
 
             <!-- Kolom Kanan: Form Auth -->

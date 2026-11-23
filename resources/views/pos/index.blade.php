@@ -842,7 +842,7 @@
 
                                     <i class="ri-save-line mr-2"></i>
 
-                                    Simpan Transaksi
+                                    F10 - Simpan Transaksi
 
                                 </button>
 
