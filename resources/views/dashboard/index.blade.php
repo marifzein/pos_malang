@@ -9,7 +9,7 @@
             <h2
                 class="text-2xl font-bold"
             >
-                Dashboard samidi
+                Dashboard
             </h2>
             <p class="text-slate-500 mt-1">
                 Ringkasan aktivitas hari ini

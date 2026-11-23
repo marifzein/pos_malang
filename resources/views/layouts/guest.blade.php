@@ -36,11 +36,11 @@
                             
                             <img 
                                 src="{{ asset('images/ttkas_512.png') }}" 
-                                alt="TataKas Logo" 
+                                alt="fipman media" 
                                 class="w-7 h-7 object-contain flex-shrink-0 "
                             >
                         </div>
-                        <span class="text-xl font-bold tracking-wider text-gray-800 uppercase">Tata<span class="text-indigo-500">Kas</span></span>
+                        <span class="text-xl font-bold tracking-wider text-gray-800 uppercase">fipman<span class="text-indigo-500">media</span></span>
                     </a>
                 </div>
 

@@ -235,7 +235,7 @@ aside::-webkit-scrollbar-track{
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>    
 
 
-{{-- pesan2 sesuai status transaksi success,error dsb --}}
+{{-- pe n2 sesuai status transaksi success,error dsb --}}
     @if(session('success'))
 
     <script>

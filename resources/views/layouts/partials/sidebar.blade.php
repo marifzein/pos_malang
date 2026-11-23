@@ -12,15 +12,15 @@
                 <i class="ri-shopping-cart-2-line text-xl"></i>
             </div> --}}
             <!-- Logo Image -->
-            <div class="w-11 h-11 rounded-full border border-x-2 border-white text-indigo-400 flex items-center justify-center flex-shrink-0 bg-blue-500">
+            <div class="w-11 h-11 rounded-full   text-indigo-400 flex items-center justify-center flex-shrink-0 ">
                 <img 
-                    src="{{ asset('images/tatakas-logo.png') }}" 
+                    src="{{ asset('images/ttkas_512.png') }}" 
                     alt="TataKas Logo" 
-                    class="w-7 h-7 object-contain flex-shrink-0 "
+                    class="w-11 h-11 object-contain flex-shrink-0 "
                 >
             </div>
             <div x-show="sidebarOpen" x-transition:enter="transition opacity duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">    
-                <h1 class="font-bold text-lg text-indigo-400 tracking-widest">TataKas</h1>   
+                <h1 class="font-bold text-lg text-indigo-400 tracking-widest">fipman media</h1>   
                 <p class="text-sm text-slate-300">Toko {{ $setting->nama_toko ?? 'Retail App' }}</p>
             </div>
         </div>
