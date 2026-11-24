@@ -26,7 +26,7 @@
                     type="text" 
                     name="search" 
                     value="{{ request('search') }}" 
-                    placeholder="Cari No. Nota..." 
+                    placeholder="Cari No. Nota/keterangan..." 
                     class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">

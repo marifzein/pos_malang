@@ -37,7 +37,10 @@ class TransactionController extends Controller
         // 🔍 2. Filter Pencarian berdasarkan Nomor Nota
         if ($request->filled('search')) {
             $search = trim($request->search);
-            $query->where('no_nota', 'like', "%{$search}%");
+            $query->where(function ($q) use ($search) {
+                $q->where('no_nota', 'like', "%{$search}%")
+                  ->orWhere('catatan', 'like', "%{$search}%");
+            });
         }
 
         // 🔑 2. Proteksi Multi-Role: Jika yang login adalah Kasir, batasi hanya transaksinya sendiri
