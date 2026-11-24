@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'POS Kasir Mobile')</title>
+
+    <!-- PWA Config -->
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="TATAKAS">
+    <link rel="apple-touch-icon" href="{{ asset('images/icon-192.png') }}">
+    <meta name="mobile-web-app-capable" content="yes">
+
     
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
@@ -109,5 +119,16 @@
     @endif
 
     @stack('scripts')
+
+    {{-- pwa --}}
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('PWA Service Worker aktif:', reg.scope))
+                    .catch(err => console.error('PWA gagal:', err));
+            });
+        }
+    </script>
 </body>
 </html>

@@ -6,6 +6,17 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
+
+        <!-- PWA Config -->
+        <link rel="manifest" href="{{ asset('manifest.json') }}">
+        <meta name="theme-color" content="#4f46e5">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="TATAKAS">
+        <link rel="apple-touch-icon" href="{{ asset('images/icon-192.png') }}">
+
+        <meta name="mobile-web-app-capable" content="yes">
+        
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -48,6 +59,16 @@
             </div>
 
         </div>
+    {{-- pwa --}}
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('PWA Service Worker aktif:', reg.scope))
+                    .catch(err => console.error('PWA gagal:', err));
+            });
+        }
+    </script>
 
     </body>
 </html>
