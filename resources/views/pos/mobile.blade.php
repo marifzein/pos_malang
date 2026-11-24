@@ -100,6 +100,18 @@
                 </div>
             </template>
         </div>
+        <!-- KETERANGAN / CATATAN -->
+        <div class="bg-white rounded-2xl p-3.5 shadow-xs border border-slate-100">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1 mb-2">
+                <i class="ri-sticky-note-line text-indigo-500 text-sm"></i> Keterangan / Catatan
+            </label>
+            <input
+                type="text"
+                x-model="catatan"
+                placeholder="Opsional..."
+                class="w-full bg-slate-50 border-0 focus:ring-2 focus:ring-indigo-500 text-sm font-semibold rounded-xl px-3.5 py-2.5 outline-none transition placeholder:text-slate-400"
+            >
+        </div>
 
         <!-- 3. DAFTAR KERANJANG BELANJA -->
         <div class="bg-white rounded-2xl p-3.5 shadow-xs border border-slate-100">
@@ -403,6 +415,7 @@ function posKasir() {
         kurangBayar: 0,
         kembalian: 0,
         customerSearch: '',
+        catatan:'',
         customerResults: [],
         selectedCustomer: null,
         allCustomers: window.ALL_CUSTOMERS || [],
@@ -617,6 +630,7 @@ function posKasir() {
                 this.card = 0;
                 this.hutang = 0; 
                 this.recalculate(); 
+                this.catatan='';
                 this.$refs.barcodeInput?.focus(); 
             }
         },  
@@ -667,7 +681,8 @@ function posKasir() {
                     voucher: this.voucher, 
                     card: this.card,
                     hutang: this.hutang, 
-                    grand_total: this.subtotal, 
+                    grand_total: this.subtotal,
+                    catatan:this.catatan, 
                     cash: this.cash, 
                     kembalian: this.kembalian 
                 }) 

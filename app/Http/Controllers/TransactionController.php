@@ -92,6 +92,8 @@ class TransactionController extends Controller
 
         $hutang     = (float) $request->hutang;
 
+        $catatan    = $request->catatan;
+
         $paymentTotal = $cash + $card + $voucher + $hutang ;
 
         if ($paymentTotal < $grandTotal)
@@ -175,6 +177,7 @@ class TransactionController extends Controller
                 'hutang'       => $hutang,
                 'cash'         => $cash,
                 'kembalian'    => $request->kembalian,
+                'catatan'      => $request->catatan,
             ]);
 
             foreach ($cart as $item) {

@@ -200,7 +200,18 @@
 
                 </div>
 
-                
+                <!-- KETERANGAN / CATATAN -->
+                <div class="bg-white rounded-xl shadow p-4">
+                    <label class="block text-sm font-semibold mb-2">
+                        Keterangan / Catatan
+                    </label>
+                    <input
+                        type="text"
+                        x-model="catatan"
+                        placeholder="Opsional..."
+                        class="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                    >
+                </div>
 
                 <!-- shortcut help -->
                  <div class="bg-white rounded-xl shadow p-4">
@@ -1109,6 +1120,8 @@ function posKasir() {
         kurangBayar:0,
 
         kembalian:0,
+
+        catatan:'',
         
         // pelanggan
         customerSearch: '',
@@ -1664,6 +1677,7 @@ function posKasir() {
                     this.card = 0;
                     this.kembalian=0;
                     this.hutang = 0; // 👈 Reset hutang saat cart dikosongkan
+                    this.catatan = '';
                 });
 
                 this.$refs.barcodeInput.focus();
@@ -1829,6 +1843,7 @@ function posKasir() {
                             card: Number(this.card || 0),
                             hutang: Number(this.hutang || 0), // 👈 Kirim parameter hutang ke backend
                             grand_total: Number(this.subtotal || 0),
+                            catatan:this.catatan,
                             cash: Number(this.cash || 0),
                             kembalian: Number(this.kembalian || 0)
                         })
