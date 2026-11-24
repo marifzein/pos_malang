@@ -69,6 +69,9 @@
                     <th class="p-3 text-left">
                         Pelanggan
                     </th>
+                    <th class="p-3 text-left">
+                        Keterangan
+                    </th>
                     <th class="p-3 text-center">
                         Status
                     </th>
@@ -111,7 +114,9 @@
                                 <span class="text-gray-400 text-xs italic">Umum (Non-Member)</span>
                             @endif
                         </td>
-
+                        <td class="p-3">
+                            {{ $trx->catatan }}
+                        </td>
                         <!-- 💡 Kolom Status Transaksi -->
                         <td class="p-3 text-center">
                             @if(strtolower($trx->status) === 'batal')
@@ -207,14 +212,28 @@
                         @endif
                     </div>
                 </div>
-
-                <!-- Footer Card: Total & Tombol Detail (Beri Jarak Cukup) -->
-                <div class="flex items-center justify-between gap-4 pt-1">
+                {{-- catatan/keterangan --}}
+                <div class="grid grid-cols-2 gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-100 text-sm">
                     <div class="shrink-0">
+                        <span class="text-xs text-slate-400 font-medium block mb-0.5">Keterangan</span>
+                        <span class="font-black text-lg text-slate-900 leading-tight">
+                            {{ $trx->catatan }}
+                        </span>
+                    </div>
+                    <div>
                         <span class="text-xs text-slate-400 font-medium block mb-0.5">Total Transaksi</span>
                         <span class="font-black text-lg text-slate-900 leading-tight">
                             Rp {{ number_format($trx->grand_total,0,',','.') }}
                         </span>
+                    </div>
+                </div>
+                <!-- Footer Card: Total & Tombol Detail (Beri Jarak Cukup) -->
+                <div class="flex items-center justify-between gap-4 pt-1">
+                    <div class="shrink-0">
+                        {{-- <span class="text-xs text-slate-400 font-medium block mb-0.5">Total Transaksi</span>
+                        <span class="font-black text-lg text-slate-900 leading-tight">
+                            Rp {{ number_format($trx->grand_total,0,',','.') }}
+                        </span> --}}
                     </div>
                     <div class="shrink-0">
                         <a href="{{ route('transactions.show',$trx->id) }}">

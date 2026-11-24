@@ -45,6 +45,7 @@ class CheckModuleAccess
 
             // 3. Pengecualian: Dashboard atau Profile boleh diakses semua orang
             $bypassControllers = [
+                'ViewController', // di route web =>pake syntax view , contoh Route::view('/akun', 'pos.akun')->name('pos.akun');
                 'DashboardController', 
                 'ProfileController',
                 'AuthenticatedSessionController', 

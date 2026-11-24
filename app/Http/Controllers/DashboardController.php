@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Helpers\DeviceHelper;
 
 class DashboardController extends Controller
 {
@@ -28,8 +29,13 @@ class DashboardController extends Controller
                 || preg_match('/(ipad|tablet|(android(?!.*mobile)))/i', $userAgent);
 
         // Jika dia adalah Kasir DAN login lewat HP/Tablet, lempar langsung ke POS Mobile
-        if ($user && $user->role === 'Kasir' && $isMobile) {
-            return redirect()->route('pos.mobile');
+        // if ($user && $user->role === 'Kasir' && $isMobile) {
+        //     return redirect()->route('pos.mobile');
+        // }
+
+        // khusus buat wijaya malang siapapun usernya lgsg tampilan grid icon
+        if (DeviceHelper::isMobile()) {
+            return view('pos.dashboard'); // Tampilan grid ikon mobile
         }
         
         /*

@@ -47,6 +47,10 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['can:akses-pos'])->group(function () {
         // Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        // halaman akun responsive
+        Route::view('/akun', 'pos.akun')->name('pos.akun');
+        
+
         Route::get('/api/products/search', [ProductController::class, 'search']);
 
         // POS & API Pendukung=>dijaga middleware shift
