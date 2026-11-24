@@ -20,13 +20,13 @@
     </title>
 
     <!-- PWA Config -->
-    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    {{-- <link rel="manifest" href="{{ asset('manifest.json') }}">
     <meta name="theme-color" content="#4f46e5">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="TATAKAS">
     <link rel="apple-touch-icon" href="{{ asset('images/icon-192.png') }}">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes"> --}}
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="POS Toko">
@@ -391,7 +391,7 @@ document.addEventListener('DOMContentLoaded',function(){
 @stack('scripts')
 
 {{-- pwa --}}
-<script>
+{{-- <script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/sw.js')
@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded',function(){
                 .catch(err => console.error('PWA gagal:', err));
         });
     }
-</script>
+</script> --}}
 
 </body>
 

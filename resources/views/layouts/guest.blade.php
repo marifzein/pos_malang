@@ -8,12 +8,12 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- PWA Config -->
-        <link rel="manifest" href="{{ asset('manifest.json') }}">
+        {{-- <link rel="manifest" href="{{ asset('manifest.json') }}">
         <meta name="theme-color" content="#4f46e5">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="default">
         <meta name="apple-mobile-web-app-title" content="TATAKAS">
-        <link rel="apple-touch-icon" href="{{ asset('images/icon-192.png') }}">
+        <link rel="apple-touch-icon" href="{{ asset('images/icon-192.png') }}"> --}}
 
         <meta name="mobile-web-app-capable" content="yes">
         
@@ -60,7 +60,7 @@
 
         </div>
     {{-- pwa --}}
-    <script>
+    {{-- <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
@@ -68,7 +68,15 @@
                     .catch(err => console.error('PWA gagal:', err));
             });
         }
-    </script>
+    </script> --}}
+
+    <script>
+    window.addEventListener('pageshow', function (event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    });
+</script>
 
     </body>
 </html>
