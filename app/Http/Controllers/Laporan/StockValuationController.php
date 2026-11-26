@@ -64,7 +64,7 @@ class StockValuationController extends Controller
         $exportType = $request->input('export');
 
         if ($exportType === 'excel') {
-            $reportData = $query->input();
+            $reportData = $query->get();
             $filename = "Laporan_Nilai_Aset_Stok_" . now()->format('Y-m-d') . ".xls";
             
             return response()->view('laporan.nilai-aset-stok.excel', compact('reportData', 'totalAsetToko'))
@@ -74,7 +74,7 @@ class StockValuationController extends Controller
         }
 
         if ($exportType === 'pdf') {
-            $reportData = $query->input();
+            $reportData = $query->get();
             return view('laporan.nilai-aset-stok.pdf', compact('reportData', 'totalAsetToko'));
         }
 
