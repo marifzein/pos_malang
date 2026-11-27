@@ -44,7 +44,8 @@
 
 <div class="center">
     <h3>{{ strtoupper($shopSetting->nama_toko) }}</h3>
-    <div>{{ $shopSetting->alamat }}</div>
+    <div>{!! nl2br(e(str_replace(['/n', '\n'], "\n", $shopSetting->alamat))) !!}</div>
+    {{-- <div>{{ $shopSetting->alamat }}</div> --}}
     <div>Telp {{ $shopSetting->telepon }}</div>
 </div>
 

@@ -165,7 +165,14 @@
                         <td class="p-3 border border-gray-200 text-center font-bold">{{ $row->total_terjual }}</td>
                         <td class="p-3 border border-gray-200 text-right font-medium text-slate-900">Rp {{ number_format($row->total_pendapatan, 0, ',', '.') }}</td>
                         <td class="p-3 border border-gray-200 text-right">Rp {{ number_format($row->total_hpp, 0, ',', '.') }}</td>
-                        <td class="p-3 border border-gray-200 text-right text-emerald-600 font-medium">Rp {{ number_format($row->laba_kotor, 0, ',', '.') }}</td>
+                        {{-- <td class="p-3 border border-gray-200 text-right text-emerald-600 font-medium">Rp {{ number_format($row->laba_kotor, 0, ',', '.') }}</td> --}}
+                        @php
+                            $labaClass = $row->laba_kotor < 0
+                                ? 'text-red-600 font-semibold'
+                                : ($row->laba_kotor > 0 ? 'text-emerald-600 font-medium' : 'text-slate-600 font-medium');
+                        @endphp
+                        <td class="p-3 border border-gray-200 text-right {{ $labaClass }}">Rp {{ number_format($row->laba_kotor, 0, ',', '.') }}</td>
+                        
                         <td class="p-3 border border-gray-200 text-center">{{ number_format($margin, 2, ',', '.') }}%</td>
                     </tr>
                 @empty
